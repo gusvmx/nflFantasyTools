@@ -56,5 +56,23 @@ public class NflFantasyDivisionPlacement {
 		element = elements.remove(elementToRemove);
 		return element;
 	}
+	
+	/**
+	 * @param members The members in the fantasy league.
+	 * @param divisions The divisions in the fantasy league.
+	 * @return A list containing string showing what division a member belongs to.
+	 */
+	public static List<String> placeMembersAmongDivisions(final List<String> members, final List<String> divisions) {
+		List<String> availableDivisions = NflFantasyDivisionPlacement.getAvailableDivisions(members, divisions);
+		List<String> availableMembers = new ArrayList<String>(members);
+		List<String> placement = new ArrayList<String>();
+		int teamMembersSize = members.size();
+		for (int i = 0; i < teamMembersSize; i++) {
+			String teamMember = getAndRemoveRandomElement(availableMembers);
+			String division = getAndRemoveRandomElement(availableDivisions);
+			placement.add("Team '" + teamMember + "' goes to division '" + division + "'");
+		}
+		return placement;
+	}
 
 }

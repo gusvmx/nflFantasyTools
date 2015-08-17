@@ -10,7 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
  * @author gus
@@ -18,6 +20,10 @@ import org.junit.Test;
  */
 public class NflFantasyDivisionPlacementTest {
 
+	/***/
+	@Rule
+	public ExpectedException expectedException = ExpectedException.none();
+	
 	/***/
 	@Test
 	public final void getMaxMembersPerDivisionWhenDivisionWillNotBeEven() {
@@ -83,5 +89,59 @@ public class NflFantasyDivisionPlacementTest {
 		String member = NflFantasyDivisionPlacement.getAndRemoveRandomElement(teamMembers);
 		Assert.assertEquals("Team1", member);
 		Assert.assertTrue(teamMembers.isEmpty());
+	}
+	
+	/***/
+	@Test
+	public final void getAndRemoveRandomElementFromEmptyList() {
+		expectedException.expect(IllegalArgumentException.class);
+		List<String> teamMembers = new ArrayList<String>();
+		NflFantasyDivisionPlacement.getAndRemoveRandomElement(teamMembers);
+	}
+	
+	/***/
+	@Test
+	public final void placeMembersWithinDivision() {
+		List<String> TEAM_MEMBERS = Arrays.asList(
+				"Caballos cimarron", 
+				"Los arrolladores",
+				"Elmer Homero",
+				"Alquimistas",
+				"Ke PANDA jada",
+				"Stalkers",
+				"Rush",
+				"BILLieverS",
+				"Dime Vaquero",
+				"White Hawk Brotherhood",
+				"35ers",
+				"Tang");
+		List<String> DIVISIONS = Arrays.asList(
+				"Receta de la abuela",
+				"Manos de mantequilla",
+				"Hormigas tackleadoras");
+		List<String> result = NflFantasyDivisionPlacement.placeMembersAmongDivisions(TEAM_MEMBERS, DIVISIONS);
+		Assert.assertEquals(12, result.size());
+	}
+	
+	/***/
+	@Test
+	public final void placeMembersWithinDivisionWhenDivisionsAreNotEven() {
+		List<String> TEAM_MEMBERS = Arrays.asList(
+				"Caballos cimarron", 
+				"Los arrolladores",
+				"Elmer Homero",
+				"Alquimistas",
+				"Ke PANDA jada",
+				"Stalkers",
+				"Rush",
+				"BILLieverS",
+				"Dime Vaquero",
+				"Tang");
+		List<String> DIVISIONS = Arrays.asList(
+				"Receta de la abuela",
+				"Manos de mantequilla",
+				"Hormigas tackleadoras");
+		List<String> result = NflFantasyDivisionPlacement.placeMembersAmongDivisions(TEAM_MEMBERS, DIVISIONS);
+		Assert.assertEquals(10, result.size());
 	}
 }
