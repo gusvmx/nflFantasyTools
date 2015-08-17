@@ -43,4 +43,21 @@ public class NflFantasyDivisionPlacementTest {
 				"Div2");
 		Assert.assertEquals(2, NflFantasyDivisionPlacement.getMaxMembersPerDivision(teamMembers, divisions));
 	}
+	
+	/***/
+	@Test
+	public final void getAvailableDivisions() {
+		List<String> teamMembers = Arrays.asList(
+				"Team1", 
+				"Team2",
+				"Team3",
+				"Team4");
+		List<String> divisions = Arrays.asList(
+				"Div1",
+				"Div2");
+		List<String> availableDivisions = NflFantasyDivisionPlacement.getAvailableDivisions(teamMembers, divisions);
+		Assert.assertEquals(4, availableDivisions.size());
+		Assert.assertEquals("Div1", availableDivisions.get(0));
+		Assert.assertEquals("Div1", availableDivisions.get(2));
+	}
 }
