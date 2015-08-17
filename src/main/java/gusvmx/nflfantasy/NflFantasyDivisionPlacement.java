@@ -5,6 +5,7 @@ package gusvmx.nflfantasy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author gus
@@ -35,6 +36,25 @@ public class NflFantasyDivisionPlacement {
 			availableDivisions.addAll(divisions);
 		}
 		return availableDivisions;
+	}
+
+	/**
+	 * @param elements The list of elements to choose from.
+	 * @return A random element from the list.
+	 */
+	public static String getAndRemoveRandomElement(final List<String> elements) {
+		if (elements.isEmpty()) {
+			throw new IllegalArgumentException("List can't be empty.");
+		}
+		String element = null;
+		int size = elements.size();
+		int elementToRemove = 0;
+		if (size > 1) {
+			Random random = new Random();
+			elementToRemove = random.nextInt(size);
+		}
+		element = elements.remove(elementToRemove);
+		return element;
 	}
 
 }
